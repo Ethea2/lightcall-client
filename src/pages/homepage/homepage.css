@@ -1,17 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
 :root {
-  --void: #0a0b14;
-  --void-2: #12142a;
-  --violet: #8b5cf6;
-  --cyan: #22d3ee;
-  --amber: #fbbf67;
-  --paper: #f5f3ff;
-  --muted: #8d8aa8;
+  --bg: #ffffff;
+  --ink: #17151f;
+  --muted: #8a8896;
+  --line: #e7e5ee;
+  --violet: #6d4aeb;
+  --cyan: #0891b2;
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 * {
@@ -28,265 +26,166 @@
   padding: 24px;
   overflow: hidden;
   background:
-    radial-gradient(1200px 800px at 50% -10%, #171a35 0%, var(--void) 55%);
+    radial-gradient(1000px 600px at 50% -10%, rgba(109, 74, 235, 0.07), transparent 60%),
+    var(--bg);
   font-family: var(--font-body);
+  color: var(--ink);
 }
 
-/* Ambient beacon glow, drifting slowly behind the card */
-.glow {
+/* Single quiet halo behind the wordmark — a soft wash, not a hard glow */
+.halo {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
+  top: 8%;
+  left: 50%;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(109, 74, 235, 0.26), rgba(8, 145, 178, 0.18) 45%, transparent 72%);
+  filter: blur(60px);
+  transform: translate(-50%, 0);
+  animation: breathe 6s ease-in-out infinite alternate;
   pointer-events: none;
-  z-index: 0;
 }
-.glow-a {
-  width: 420px;
-  height: 420px;
-  top: -140px;
-  left: -120px;
-  background: var(--violet);
-  opacity: 0.45;
-  animation: float-a 14s ease-in-out infinite;
-}
-.glow-b {
-  width: 380px;
-  height: 380px;
-  bottom: -160px;
-  right: -100px;
-  background: var(--cyan);
-  opacity: 0.4;
-  animation: float-b 16s ease-in-out infinite;
-}
-.glow-c {
-  width: 260px;
-  height: 260px;
-  top: 45%;
-  left: 62%;
-  background: var(--amber);
-  opacity: 0.25;
-  animation: float-a 20s ease-in-out infinite reverse;
+@keyframes breathe {
+  0% { opacity: 0.5; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0.8; transform: translate(-50%, 0) scale(1.06); }
 }
 
-@keyframes float-a {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, 20px) scale(1.08); }
-}
-@keyframes float-b {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-25px, -15px) scale(1.05); }
-}
-
-/* Glass panel */
-.card {
+.content {
   position: relative;
-  z-index: 1;
-  width: min(420px, 100%);
-  padding: 40px 36px;
-  border-radius: 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  box-shadow:
-    0 20px 60px -20px rgba(139, 92, 246, 0.5),
-    0 0 80px -30px rgba(34, 211, 238, 0.4);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Beacon: pulsing sonar rings behind a bright core */
-.beacon {
-  position: relative;
-  width: 34px;
-  height: 34px;
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.beacon-core {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, var(--amber) 40%, var(--violet) 100%);
-  box-shadow: 0 0 12px 2px var(--amber), 0 0 24px 6px var(--violet);
-  z-index: 1;
-}
-.beacon-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid var(--cyan);
-  opacity: 0;
-  animation: pulse-ring 2.8s ease-out infinite;
-}
-.beacon-ring.r2 {
-  border-color: var(--violet);
-  animation-delay: 1.4s;
-}
-@keyframes pulse-ring {
-  0% { transform: scale(0.3); opacity: 0.8; }
-  80% { opacity: 0; }
-  100% { transform: scale(1.8); opacity: 0; }
+  width: min(380px, 100%);
+  text-align: center;
 }
 
 .wordmark {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  font-size: clamp(2rem, 6vw, 2.4rem);
   font-weight: 600;
   letter-spacing: -0.02em;
-  background: linear-gradient(90deg, var(--paper), var(--cyan) 60%, var(--violet));
+  background: linear-gradient(90deg, var(--ink), var(--violet) 55%, var(--cyan));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .tagline {
-  margin: 8px 0 28px;
+  margin: 10px 0 40px;
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--muted);
 }
 
-.section {
-  margin-bottom: 4px;
-}
-
-.eyebrow {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
+.divider {
+  width: 40px;
+  height: 1px;
+  margin: 0 auto 32px;
+  background: var(--line);
 }
 
 .join-row {
   display: flex;
+  align-items: flex-end;
   gap: 8px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  margin-bottom: 8px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .room-input {
-  flex: 1;
-  min-width: 0;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--paper);
-  font-family: var(--font-mono);
-  font-size: 0.92rem;
+  width: 100%;
+  padding: 8px 2px;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
   letter-spacing: 0.03em;
   outline: none;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.25s ease;
 }
 .room-input::placeholder {
   color: var(--muted);
 }
 .room-input:focus-visible {
   border-color: var(--cyan);
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15), 0 0 20px -4px var(--cyan);
 }
 
 .join-btn {
   flex: none;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 1px;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  background: linear-gradient(135deg, var(--violet), var(--cyan));
-  box-shadow: 0 4px 20px -6px rgba(139, 92, 246, 0.6);
+  color: var(--muted);
+  background: transparent;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 .join-btn:hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 6px 26px -4px rgba(34, 211, 238, 0.7);
-}
-.join-btn:active {
-  transform: scale(0.97);
+  color: var(--violet);
+  transform: translateX(2px);
 }
 .join-btn:focus-visible {
   outline: 2px solid var(--cyan);
   outline-offset: 2px;
 }
 
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 26px 0;
-  font-size: 0.72rem;
+.or {
+  margin: 0 0 28px;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
 }
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-}
 
 .create-btn {
   width: 100%;
-  padding: 14px 20px;
+  padding: 14px;
   border: none;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  border-radius: 10px;
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.95rem;
-  color: #0a0b14;
-  background: linear-gradient(120deg, var(--amber), var(--cyan) 45%, var(--violet) 100%);
-  background-size: 200% 100%;
-  background-position: 0% 0%;
-  box-shadow: 0 8px 30px -8px rgba(139, 92, 246, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  background: linear-gradient(120deg, var(--violet), var(--cyan));
   cursor: pointer;
-  transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px -14px rgba(109, 74, 235, 0.55);
 }
 .create-btn:hover {
-  background-position: 100% 0%;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px -8px rgba(34, 211, 238, 0.7);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px -12px rgba(109, 74, 235, 0.45);
 }
 .create-btn:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.99);
 }
 .create-btn:focus-visible {
   outline: 2px solid var(--cyan);
   outline-offset: 2px;
 }
 
-@media (max-width: 420px) {
-  .card {
-    padding: 28px 22px;
-  }
-  .wordmark {
-    font-size: 1.4rem;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .beacon-ring,
-  .glow-a,
-  .glow-b,
-  .glow-c {
-    animation: none !important;
+  .halo {
+    animation: none;
   }
 }

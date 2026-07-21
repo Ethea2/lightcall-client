@@ -1,15 +1,20 @@
-import { useNavigate } from "@solidjs/router"
-import { createSignal } from "solid-js"
-import "./Homepage.css"
+import { useNavigate } from "@solidjs/router";
+import { createSignal } from "solid-js";
+import "./Homepage.css";
 
 export default function Homepage() {
-  const nav = useNavigate()
-  const [roomId, setRoomId] = createSignal("")
+  const nav = useNavigate();
+  const [roomId, setRoomId] = createSignal("");
+  const [username, setUsername] = createSignal("");
 
   const joinRoom = () => {
-    const id = roomId().trim()
-    nav(id ? `/room/${id}` : "/room")
-  }
+    if (username().trim() === "") {
+      alert("Please add a username!");
+      return;
+    }
+    const id = roomId().trim();
+    nav(id ? `/room/${id}` : "/room");
+  };
 
   return (
     <div class="page">
@@ -17,13 +22,30 @@ export default function Homepage() {
 
       <div class="content">
         <h1 class="wordmark">LightCall</h1>
-        <p class="tagline">Step into the light. No accounts, no waiting rooms.</p>
+        <p class="tagline">
+          Step into the light. No accounts, no waiting rooms.
+        </p>
 
         <div class="divider" />
 
+        <div class="field">
+          <label class="field-label" for="room-id">
+            Username
+          </label>
+          <input
+            id="room-id"
+            class="room-input"
+            placeholder="Set Username Here"
+            value={username()}
+            onInput={(e) => setUsername(e.currentTarget.value)}
+          />
+        </div>
+        <br />
         <div class="join-row">
           <div class="field">
-            <label class="field-label" for="room-id">Room ID</label>
+            <label class="field-label" for="room-id">
+              Room ID
+            </label>
             <input
               id="room-id"
               class="room-input"
@@ -48,10 +70,19 @@ export default function Homepage() {
 
         <div class="or">or</div>
 
-        <button class="create-btn" onClick={() => nav("/room")}>
+        <button
+          class="create-btn"
+          onClick={() => {
+            if (username().trim() === "") {
+              alert("Please add a username!");
+              return;
+            }
+            nav("/room");
+          }}
+        >
           Create a room
         </button>
       </div>
     </div>
-  )
+  );
 }
